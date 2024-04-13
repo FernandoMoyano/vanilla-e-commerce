@@ -3,6 +3,7 @@
 //querySelectorAll retorna una lista de nodos
 const buttonAdd = document.querySelectorAll(".product__add");
 const cartContainer = document.querySelector(".cart__container");
+const handleQuantity=document.querySelectorAll(".cart__handleQuantity")
 const cart = [];
 
 /**
@@ -34,11 +35,11 @@ const addToCart = () => {
   buttonAdd.forEach((button) =>
     button.addEventListener("click", (evento) => {
       const buttonAdd = evento.target;
-      const product = buttonAdd.closest(".product");
+      const productCard = buttonAdd.closest(".product");
       //console.log(product);
-      const productId = product.getAttribute("data-id");
-      const productTitle = product.querySelector(".product__title").innerText;
-      const productPrice = product.querySelector(".product__price").innerText;
+      const productId = productCard.getAttribute("data-id");
+      const productTitle = productCard.querySelector(".product__title").innerText;
+      const productPrice = productCard.querySelector(".product__price").innerText;
 
       const productItem = {
         id: productId,
@@ -56,12 +57,14 @@ const addToCart = () => {
 
 addToCart();
 
+
+
 /**
  * Description
  * @returns {any}
  */
 const ShowListOfProductsInCart = () => {
-  //cartContainer.innerHTML = "";
+  cartContainer.innerHTML = "";
   if (cart.length === 0) {
     const message = "Cart is Empty";
     const messageContainer = document.createElement("p");
@@ -81,13 +84,33 @@ const ShowListOfProductsInCart = () => {
       price.className = "cart__item";
       price.textContent = item.price;
       itemContainer.append(price);
+
+      const buttonDecrement=document.createElement("button")
+      buttonDecrement.className="cart__handleQuantity"
+      buttonDecrement.textContent="-"
+      itemContainer.append(buttonDecrement)
       //creamos la cantidad
       const quantity = document.createElement("span");
       quantity.className = "cart__item";
       quantity.textContent = item.quantity;
       itemContainer.append(quantity);
 
+      const buttonIncrement=document.createElement("button")
+      buttonIncrement.className="cart__handleQuantity"
+      buttonIncrement.textContent="+"
+      itemContainer.append(buttonIncrement)
+
       cartContainer.appendChild(itemContainer);
     });
   }
 };
+
+
+const incrementQuantity=()=>{
+  console.log("increment")
+}
+
+
+handleQuantity.forEach((button)=>
+  button.addEventListener("click", incrementQuantity))
+
