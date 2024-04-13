@@ -3,7 +3,7 @@
 //querySelectorAll retorna una lista de nodos
 const buttonAdd = document.querySelectorAll(".product__add");
 const cartContainer = document.querySelector(".cart__container");
-const handleQuantity=document.querySelectorAll(".cart__handleQuantity")
+const handleQuantity = document.querySelectorAll(".cart__handleQuantity");
 const cart = [];
 
 /**
@@ -38,8 +38,10 @@ const addToCart = () => {
       const productCard = buttonAdd.closest(".product");
       //console.log(product);
       const productId = productCard.getAttribute("data-id");
-      const productTitle = productCard.querySelector(".product__title").innerText;
-      const productPrice = productCard.querySelector(".product__price").innerText;
+      const productTitle =
+        productCard.querySelector(".product__title").innerText;
+      const productPrice =
+        productCard.querySelector(".product__price").innerText;
 
       const productItem = {
         id: productId,
@@ -57,8 +59,6 @@ const addToCart = () => {
 
 addToCart();
 
-
-
 /**
  * Description
  * @returns {any}
@@ -74,6 +74,7 @@ const ShowListOfProductsInCart = () => {
     cart.map((item) => {
       const itemContainer = document.createElement("div");
       itemContainer.className = "cart__itemContainer";
+      itemContainer.dataset.productId = item.id;
       //creamos el titulo
       const title = document.createElement("p");
       title.className = "cart__item";
@@ -85,32 +86,62 @@ const ShowListOfProductsInCart = () => {
       price.textContent = item.price;
       itemContainer.append(price);
 
-      const buttonDecrement=document.createElement("button")
-      buttonDecrement.className="cart__handleQuantity"
-      buttonDecrement.textContent="-"
-      itemContainer.append(buttonDecrement)
+      const buttonDecrement = document.createElement("button");
+      buttonDecrement.className = "cart__handleQuantity";
+      buttonDecrement.textContent = "-";
+      itemContainer.append(buttonDecrement);
+
       //creamos la cantidad
       const quantity = document.createElement("span");
       quantity.className = "cart__item";
       quantity.textContent = item.quantity;
       itemContainer.append(quantity);
 
-      const buttonIncrement=document.createElement("button")
-      buttonIncrement.className="cart__handleQuantity"
-      buttonIncrement.textContent="+"
-      itemContainer.append(buttonIncrement)
+      const buttonIncrement = document.createElement("button");
+      buttonIncrement.className = "cart__handleQuantity";
+      buttonIncrement.textContent = "+";
+      itemContainer.append(buttonIncrement);
 
       cartContainer.appendChild(itemContainer);
     });
   }
 };
 
+//Disminuir la cantidad de un producto
+const decrementQuantity = (productId) => {
+  const productIndex = cart.findIndex((item) => item.id === productId);
+  if (productIndex !== -1) {
+    if (cart[productIndex].quantity > 1) {
+      cart[productIndex].quantity--;
+    } else {
+      cart.splice(productIndex, 1);
+    }
+    ShowListOfProductsInCart();
+  }
+  console.log(cart);
+};
 
-const incrementQuantity=()=>{
-  console.log("increment")
-}
+//Incrementar la cantidad de un producto
+const incrementQuantity = (productId) => {
+  const productIndex = cart.findIndex((item) => item.id === productId);
+  if (productIndex !== -1) {
+    cart[productIndex].quantity++;
+    console.log("increment");
+  }
+  ShowListOfProductsInCart();
+  console.log(cart);
+};
+//Manejar eventos sobre elementos que se generan dinamicamente
+//a través de la delegacion de eventos
 
-
-handleQuantity.forEach((button)=>
-  button.addEventListener("click", incrementQuantity))
-
+cartContainer.addEventListener("click", (evento) => {
+  if (evento.target.classList.contains("cart__handleQuantity")) {
+    const itemContainerId = evento.target.closest(".cart__itemContainer");
+    const itemId = itemContainerId.dataset.productId;
+    if (evento.target.textContent === "-") {
+      decrementQuantity(itemId);
+    } else if (evento.target.textContent === "+") {
+      incrementQuantity(itemId);
+    }
+  }
+});
