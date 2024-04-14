@@ -74,7 +74,7 @@ const ShowListOfProductsInCart = () => {
     cart.map((item) => {
       const itemContainer = document.createElement("div");
       itemContainer.className = "cart__itemContainer";
-      itemContainer.dataset.productId = item.id;
+      itemContainer.setAttribute("data-item-id", item.id);
       //creamos el titulo
       const title = document.createElement("p");
       title.className = "cart__item";
@@ -104,6 +104,16 @@ const ShowListOfProductsInCart = () => {
 
       cartContainer.appendChild(itemContainer);
     });
+  }
+};
+
+const updateQuantityDisplay = (productId, newQuantity) => {
+  const itemContainer = cartContainer.querySelector(
+    `[data-product-id="${productId}"]`
+  );
+  if (itemContainer) {
+    const quantitySpan = itemContainer.querySelector("span");
+    quantitySpan.textContent = newQuantity;
   }
 };
 
