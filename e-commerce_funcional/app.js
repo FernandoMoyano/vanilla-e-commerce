@@ -79,7 +79,7 @@ const ShowListOfProductsInCart = () => {
       itemContainer.append(title);
       //creamos el precio
       const price = document.createElement("p");
-      price.className = "cart__item";
+      price.className = "cart__itemPrice";
       price.textContent = item.price;
       itemContainer.append(price);
 
@@ -109,6 +109,11 @@ const ShowListOfProductsInCart = () => {
   }
 };
 
+const updatePartialPrice = (quantity, price) => {
+  const newPartialPrice = quantity * price;
+  return newPartialPrice;
+};
+
 /**
  * Actualizar la cantidad de un producto
  * @param {number} productId
@@ -120,6 +125,12 @@ const updateQuantityDisplay = (productId, newQuantity) => {
   if (item) {
     const quantitySpan = item.querySelector(".cart__span");
     quantitySpan.textContent = newQuantity;
+
+    const itemPriceElement = item.querySelector(".cart__itemPrice");
+    // quitamos el primer carácter y convertimos a número
+    const price = parseFloat(itemPriceElement.textContent.replace(/^\$/, ""));
+    const newPartialPrice = updatePartialPrice(newQuantity, price);
+    itemPriceElement.textContent = `$${newPartialPrice}`;
   }
 };
 

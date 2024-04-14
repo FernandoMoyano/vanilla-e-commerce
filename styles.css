@@ -79,6 +79,10 @@ body{
 .cart__item{
   margin: 10px;
 }
+
+.cart__itemPrice{
+  font-weight: bold;
+}
 .cart__span{
   margin: 10px;
   font-weight: bold;
