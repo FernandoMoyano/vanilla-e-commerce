@@ -1,5 +1,3 @@
-
-
 //querySelectorAll retorna una lista de nodos
 const buttonAdd = document.querySelectorAll(".product__add");
 const cartContainer = document.querySelector(".cart__container");
@@ -102,6 +100,11 @@ const ShowListOfProductsInCart = () => {
       buttonIncrement.textContent = "+";
       itemContainer.append(buttonIncrement);
 
+      const buttonDelete = document.createElement("button");
+      buttonDelete.className = "cart__delete";
+      buttonDelete.textContent = "X";
+      itemContainer.append(buttonDelete);
+
       cartContainer.appendChild(itemContainer);
     });
   }
@@ -109,47 +112,49 @@ const ShowListOfProductsInCart = () => {
 
 //Actuailzar solo el span de cantidad.
 const updateQuantityDisplay = (productId, newQuantity) => {
-  const itemContainer = cartContainer.querySelector(
-    `[data-item-id="${productId}"]`
-  );
-  if (itemContainer) {
-    const quantitySpan = itemContainer.querySelector(".cart__span");
+  const item = cartContainer.querySelector(`[data-item-id="${productId}"]`);
+  if (item) {
+    const quantitySpan = item.querySelector(".cart__span");
     quantitySpan.textContent = newQuantity;
   }
 };
 
-
-
 //Disminuir la cantidad de un producto
 const decrementQuantity = (productId) => {
   const productIndex = cart.findIndex((item) => item.id === productId);
+  console.log(productIndex);
   if (productIndex !== -1) {
     if (cart[productIndex].quantity > 1) {
       cart[productIndex].quantity--;
-      updateQuantityDisplay(productId, cart[productIndex].quantity)
+      updateQuantityDisplay(productId, cart[productIndex].quantity);
     } else {
       cart.splice(productIndex, 1);
     }
-    ShowListOfProductsInCart()
-   
+    ShowListOfProductsInCart();
   }
   console.log(cart);
 };
 
-
-
 //Incrementar la cantidad de un producto
 const incrementQuantity = (productId) => {
   const productIndex = cart.findIndex((item) => item.id === productId);
+  console.log(productIndex);
   if (productIndex !== -1) {
     cart[productIndex].quantity++;
-    updateQuantityDisplay(productId, cart[productIndex].quantity)
+    updateQuantityDisplay(productId, cart[productIndex].quantity);
     console.log("increment");
   }
 
   console.log(cart);
 };
 
+const deleteProduct = (productId) => {
+  const productIndex = cart.findIndex((item) => item.id === productId);
+  if (productIndex !== -1) {
+    cart.splice([productIndex], 1);
+  }
+  ShowListOfProductsInCart();
+};
 
 //Manejar eventos sobre elementos que se generan dinamicamente
 //a través de la delegacion de eventos
@@ -163,5 +168,11 @@ cartContainer.addEventListener("click", (evento) => {
     } else if (evento.target.textContent === "+") {
       incrementQuantity(itemId);
     }
+  }
+  if (evento.target.classList.contains("cart__delete")) {
+    const itemContainer = evento.target.closest(".cart__itemContainer");
+    const itemId = itemContainer.dataset.itemId;
+    deleteProduct(itemId);
+    console.log(cart);
   }
 });

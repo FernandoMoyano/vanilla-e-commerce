@@ -79,9 +79,9 @@ body{
 .cart__item{
   margin: 10px;
 }
-.cart_span{
-  width: 100%;
+.cart__span{
   margin: 10px;
+  font-weight: bold;
 }
 
 .cart__handleQuantity{
@@ -89,5 +89,20 @@ body{
   height: 20px;
   border: none;
   cursor: pointer;
+  border-radius: 8px;
+  background-color: rgb(158, 158, 158);
+  color: white;
+
+}
+
+.cart__delete{
+  width: 60px;
+  height: 20px;
+  border: none;
+  cursor: pointer;
+  margin: 20px;
+  background-color: red;
+  color: white;
+  border-radius: 8px;
 
 }
