@@ -1,4 +1,4 @@
-"use strict";
+
 
 //querySelectorAll retorna una lista de nodos
 const buttonAdd = document.querySelectorAll(".product__add");
@@ -93,7 +93,7 @@ const ShowListOfProductsInCart = () => {
 
       //creamos la cantidad
       const quantity = document.createElement("span");
-      quantity.className = "cart__item";
+      quantity.className = "cart__span";
       quantity.textContent = item.quantity;
       itemContainer.append(quantity);
 
@@ -107,15 +107,18 @@ const ShowListOfProductsInCart = () => {
   }
 };
 
+//Actuailzar solo el span de cantidad.
 const updateQuantityDisplay = (productId, newQuantity) => {
   const itemContainer = cartContainer.querySelector(
-    `[data-product-id="${productId}"]`
+    `[data-item-id="${productId}"]`
   );
   if (itemContainer) {
-    const quantitySpan = itemContainer.querySelector("span");
+    const quantitySpan = itemContainer.querySelector(".cart__span");
     quantitySpan.textContent = newQuantity;
   }
 };
+
+
 
 //Disminuir la cantidad de un producto
 const decrementQuantity = (productId) => {
@@ -123,31 +126,38 @@ const decrementQuantity = (productId) => {
   if (productIndex !== -1) {
     if (cart[productIndex].quantity > 1) {
       cart[productIndex].quantity--;
+      updateQuantityDisplay(productId, cart[productIndex].quantity)
     } else {
       cart.splice(productIndex, 1);
     }
-    ShowListOfProductsInCart();
+    ShowListOfProductsInCart()
+   
   }
   console.log(cart);
 };
+
+
 
 //Incrementar la cantidad de un producto
 const incrementQuantity = (productId) => {
   const productIndex = cart.findIndex((item) => item.id === productId);
   if (productIndex !== -1) {
     cart[productIndex].quantity++;
+    updateQuantityDisplay(productId, cart[productIndex].quantity)
     console.log("increment");
   }
-  ShowListOfProductsInCart();
+
   console.log(cart);
 };
+
+
 //Manejar eventos sobre elementos que se generan dinamicamente
 //a través de la delegacion de eventos
 
 cartContainer.addEventListener("click", (evento) => {
   if (evento.target.classList.contains("cart__handleQuantity")) {
     const itemContainerId = evento.target.closest(".cart__itemContainer");
-    const itemId = itemContainerId.dataset.productId;
+    const itemId = itemContainerId.dataset.itemId;
     if (evento.target.textContent === "-") {
       decrementQuantity(itemId);
     } else if (evento.target.textContent === "+") {

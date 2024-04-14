@@ -79,6 +79,10 @@ body{
 .cart__item{
   margin: 10px;
 }
+.cart_span{
+  width: 100%;
+  margin: 10px;
+}
 
 .cart__handleQuantity{
   width: 80px;
