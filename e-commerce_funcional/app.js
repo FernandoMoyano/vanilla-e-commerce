@@ -58,8 +58,7 @@ const addToCart = () => {
 addToCart();
 
 /**
- * Description
- * @returns {any}
+ * Funcion que genera el item dentro del carrito
  */
 const ShowListOfProductsInCart = () => {
   cartContainer.innerHTML = "";
@@ -110,7 +109,12 @@ const ShowListOfProductsInCart = () => {
   }
 };
 
-//Actuailzar solo el span de cantidad.
+/**
+ * Actualizar la cantidad de un producto
+ * @param {number} productId
+ * @param {number} newQuantity
+ *
+ */
 const updateQuantityDisplay = (productId, newQuantity) => {
   const item = cartContainer.querySelector(`[data-item-id="${productId}"]`);
   if (item) {
@@ -119,7 +123,10 @@ const updateQuantityDisplay = (productId, newQuantity) => {
   }
 };
 
-//Disminuir la cantidad de un producto
+/**
+ * Disminuir la cantidad de un producto
+ * @param {number} productId
+ */
 const decrementQuantity = (productId) => {
   const productIndex = cart.findIndex((item) => item.id === productId);
   console.log(productIndex);
@@ -135,7 +142,11 @@ const decrementQuantity = (productId) => {
   console.log(cart);
 };
 
-//Incrementar la cantidad de un producto
+/**
+ * Aumentar la cantidad de un producto
+ * @param {number} productId
+ *
+ */
 const incrementQuantity = (productId) => {
   const productIndex = cart.findIndex((item) => item.id === productId);
   console.log(productIndex);
@@ -148,6 +159,10 @@ const incrementQuantity = (productId) => {
   console.log(cart);
 };
 
+/**
+ * Eliminar un producto del carrito
+ * @param {number} productId
+ */
 const deleteProduct = (productId) => {
   const productIndex = cart.findIndex((item) => item.id === productId);
   if (productIndex !== -1) {
