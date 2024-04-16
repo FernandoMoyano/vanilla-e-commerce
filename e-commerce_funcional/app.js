@@ -2,6 +2,7 @@
 const buttonAdd = document.querySelectorAll(".product__add");
 const cartContainer = document.querySelector(".cart__container");
 const handleQuantity = document.querySelectorAll(".cart__handleQuantity");
+const totalPrice = document.querySelector(".cart__totalPrice");
 const cart = [];
 
 /**
@@ -17,7 +18,6 @@ const checkIfItExists = (productItem) => {
     cart.push({
       ...productItem,
       quantity: 1,
-      unitPrice: parseFloat(productItem.price.replace(/^\$/, "")),
     });
     ShowListOfProductsInCart();
   } else {
@@ -111,6 +111,18 @@ const ShowListOfProductsInCart = () => {
 };
 
 /**
+ * Description: Calcular el precio total del carrito
+ * @returns {number} precio total
+ */
+const calculateTotalPrice = () => {
+  const totalPriceInTheCart = cart.reduce((total, item) => {
+    const itemPrice = parseFloat(item.price.replace(/^\$/, ""));
+    return total + itemPrice * item.quantity;
+  }, 0);
+  return totalPriceInTheCart;
+};
+
+/**
  * Description
  * @param {number} quantity
  * @param {number} price
@@ -140,6 +152,8 @@ const updateQuantityDisplay = (productId, newQuantity) => {
         productToUpdate.price
       );
       const itemPriceElement = item.querySelector(".cart__itemPrice");
+      const totalPriceInTheCart = calculateTotalPrice();
+      totalPrice.textContent = totalPriceInTheCart;
       itemPriceElement.textContent = `$${newPartialPrice.toFixed(2)}`;
     }
   }
@@ -158,8 +172,8 @@ const decrementQuantity = (productId) => {
       updateQuantityDisplay(productId, cart[productIndex].quantity);
     } else {
       cart.splice(productIndex, 1);
+      ShowListOfProductsInCart();
     }
-    ShowListOfProductsInCart();
   }
   console.log(cart);
 };
