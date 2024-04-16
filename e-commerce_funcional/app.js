@@ -17,6 +17,7 @@ const checkIfItExists = (productItem) => {
     cart.push({
       ...productItem,
       quantity: 1,
+      unitPrice: parseFloat(productItem.price.replace(/^\$/, "")),
     });
     ShowListOfProductsInCart();
   } else {
@@ -58,7 +59,7 @@ const addToCart = () => {
 addToCart();
 
 /**
- * Funcion que genera el item dentro del carrito
+ * Description:Funcion que genera el item dentro del carrito
  */
 const ShowListOfProductsInCart = () => {
   cartContainer.innerHTML = "";
@@ -109,13 +110,19 @@ const ShowListOfProductsInCart = () => {
   }
 };
 
+/**
+ * Description
+ * @param {number} quantity
+ * @param {number} price
+ * @returns {number}
+ */
 const updatePartialPrice = (quantity, price) => {
   const newPartialPrice = quantity * price;
   return newPartialPrice;
 };
 
 /**
- * Actualizar la cantidad de un producto
+ * Description:Actualizar la cantidad de un producto
  * @param {number} productId
  * @param {number} newQuantity
  *
@@ -126,16 +133,20 @@ const updateQuantityDisplay = (productId, newQuantity) => {
     const quantitySpan = item.querySelector(".cart__span");
     quantitySpan.textContent = newQuantity;
 
-    const itemPriceElement = item.querySelector(".cart__itemPrice");
-    // quitamos el primer carácter y convertimos a número
-    const price = parseFloat(itemPriceElement.textContent.replace(/^\$/, ""));
-    const newPartialPrice = updatePartialPrice(newQuantity, price);
-    itemPriceElement.textContent = `$${newPartialPrice}`;
+    const productToUpdate = cart.find((p) => p.id === productId);
+    if (productToUpdate) {
+      const newPartialPrice = updatePartialPrice(
+        newQuantity,
+        productToUpdate.price
+      );
+      const itemPriceElement = item.querySelector(".cart__itemPrice");
+      itemPriceElement.textContent = `$${newPartialPrice.toFixed(2)}`;
+    }
   }
 };
 
 /**
- * Disminuir la cantidad de un producto
+ * Description: Disminuir la cantidad de un producto
  * @param {number} productId
  */
 const decrementQuantity = (productId) => {
@@ -154,7 +165,7 @@ const decrementQuantity = (productId) => {
 };
 
 /**
- * Aumentar la cantidad de un producto
+ *Description: Aumentar la cantidad de un producto
  * @param {number} productId
  *
  */
@@ -171,7 +182,7 @@ const incrementQuantity = (productId) => {
 };
 
 /**
- * Eliminar un producto del carrito
+ * Description:Eliminar un producto del carrito
  * @param {number} productId
  */
 const deleteProduct = (productId) => {
