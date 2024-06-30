@@ -5,12 +5,12 @@ const handleQuantity = document.querySelectorAll(".cart__handleQuantity");
 const totalPrice = document.querySelector(".cart__totalPrice");
 const cart = [];
 
-/**
- * Description:Funcion que chequea si el productro ya esta agregado
- * al carrito
+/********************************************************
+ * Description:
+ * Funcion que chequea si el productro ya esta agregado al carrito
  * @param {Object} productItem
- *
- */
+ ********************************************************/
+
 const checkIfItExists = (productItem) => {
   const isExisting = cart.findIndex((item) => item.id === productItem.id);
   //console.log(isExisting);
@@ -27,9 +27,11 @@ const checkIfItExists = (productItem) => {
   }
 };
 
-/**
- * Description:Funcion para agregar el producto al carro
- */
+/*********************************************
+ * Description:
+ * Funcion para agregar el producto al carro
+ *********************************************/
+
 const addToCart = () => {
   buttonAdd.forEach((button) =>
     button.addEventListener("click", (evento) => {
@@ -58,9 +60,11 @@ const addToCart = () => {
 
 addToCart();
 
-/**
- * Description:Funcion que genera el item dentro del carrito
- */
+/*************************************************
+ * Description:
+ * Funcion que genera el item dentro del carrito
+ *************************************************/
+
 const ShowListOfProductsInCart = () => {
   cartContainer.innerHTML = "";
   if (cart.length === 0) {
@@ -73,17 +77,20 @@ const ShowListOfProductsInCart = () => {
       const itemContainer = document.createElement("div");
       itemContainer.className = "cart__itemContainer";
       itemContainer.setAttribute("data-item-id", item.id);
+
       //creamos el titulo
       const title = document.createElement("p");
       title.className = "cart__item";
       title.textContent = item.title;
       itemContainer.append(title);
+
       //creamos el precio
       const price = document.createElement("p");
       price.className = "cart__itemPrice";
       price.textContent = item.price;
       itemContainer.append(price);
 
+      //creación del boton de decrementar
       const buttonDecrement = document.createElement("button");
       buttonDecrement.className = "cart__handleQuantity";
       buttonDecrement.textContent = "-";
@@ -95,11 +102,13 @@ const ShowListOfProductsInCart = () => {
       quantity.textContent = item.quantity;
       itemContainer.append(quantity);
 
+      //creación del boton de aumentar
       const buttonIncrement = document.createElement("button");
       buttonIncrement.className = "cart__handleQuantity";
       buttonIncrement.textContent = "+";
       itemContainer.append(buttonIncrement);
 
+      //Creación del boton eliminar
       const buttonDelete = document.createElement("button");
       buttonDelete.className = "cart__delete";
       buttonDelete.textContent = "X";
@@ -110,10 +119,11 @@ const ShowListOfProductsInCart = () => {
   }
 };
 
-/**
+/*****************************************************
  * Description: Calcular el precio total del carrito
  * @returns {number} precio total
- */
+ ****************************************************/
+
 const calculateTotalPrice = () => {
   const totalPriceInTheCart = cart.reduce((total, item) => {
     const itemPrice = parseFloat(item.price.replace(/^\$/, ""));
@@ -122,23 +132,25 @@ const calculateTotalPrice = () => {
   return totalPriceInTheCart;
 };
 
-/**
- * Description
+/*******************************************************
+ * Description: Función que actualiza el precio parcial
  * @param {number} quantity
  * @param {number} price
  * @returns {number}
- */
+ *******************************************************/
+
 const updatePartialPrice = (quantity, price) => {
   const newPartialPrice = quantity * price;
   return newPartialPrice;
 };
 
-/**
- * Description:Actualizar la cantidad de un producto
+/************************************************
+ * Description:
+ * Actualizar la cantidad de un producto
  * @param {number} productId
  * @param {number} newQuantity
- *
- */
+ ************************************************/
+
 const updateQuantityDisplay = (productId, newQuantity) => {
   const item = cartContainer.querySelector(`[data-item-id="${productId}"]`);
   if (item) {
@@ -159,10 +171,11 @@ const updateQuantityDisplay = (productId, newQuantity) => {
   }
 };
 
-/**
+/*********************************************************
  * Description: Disminuir la cantidad de un producto
  * @param {number} productId
- */
+ ********************************************************/
+
 const decrementQuantity = (productId) => {
   const productIndex = cart.findIndex((item) => item.id === productId);
   console.log(productIndex);
@@ -178,11 +191,11 @@ const decrementQuantity = (productId) => {
   console.log(cart);
 };
 
-/**
+/***************************************************
  *Description: Aumentar la cantidad de un producto
  * @param {number} productId
- *
- */
+ *************************************************/
+
 const incrementQuantity = (productId) => {
   const productIndex = cart.findIndex((item) => item.id === productId);
   console.log(productIndex);
@@ -195,10 +208,11 @@ const incrementQuantity = (productId) => {
   console.log(cart);
 };
 
-/**
+/**************************************************
  * Description:Eliminar un producto del carrito
  * @param {number} productId
- */
+ **************************************************/
+
 const deleteProduct = (productId) => {
   const productIndex = cart.findIndex((item) => item.id === productId);
   if (productIndex !== -1) {
