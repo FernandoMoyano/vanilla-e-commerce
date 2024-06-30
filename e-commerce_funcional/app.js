@@ -7,6 +7,25 @@ const cart = [];
 
 /********************************************************
  * Description:
+ * Función que muestra un mensaje indicando que el carrito
+ * está vacío y actualiza el contenido del contenedor del
+ * carrito para reflejarlo.
+ ********************************************************/
+
+const showCartEmptyMessage = () => {
+  cartContainer.innerHTML = "";
+  const message = "Cart is Empty";
+  const messageContainer = document.createElement("p");
+  messageContainer.textContent = message;
+  cartContainer.append(messageContainer);
+  totalPrice.textContent = "";
+};
+
+if (cart.length === 0) {
+  showCartEmptyMessage();
+}
+/********************************************************
+ * Description:
  * Funcion que chequea si el productro ya esta agregado al carrito
  * @param {Object} productItem
  ********************************************************/
@@ -20,6 +39,7 @@ const checkIfItExists = (productItem) => {
       quantity: 1,
     });
     ShowListOfProductsInCart();
+    updateTotalPrice();
   } else {
     alert(
       "El Producto ya ha sido agregado modifica su cantidad desde el carrito"
@@ -67,60 +87,54 @@ addToCart();
 
 const ShowListOfProductsInCart = () => {
   cartContainer.innerHTML = "";
-  if (cart.length === 0) {
-    const message = "Cart is Empty";
-    const messageContainer = document.createElement("p");
-    messageContainer.textContent = message;
-    cartContainer.append(messageContainer);
-  } else {
-    cart.map((item) => {
-      const itemContainer = document.createElement("div");
-      itemContainer.className = "cart__itemContainer";
-      itemContainer.setAttribute("data-item-id", item.id);
+  cart.map((item) => {
+    const itemContainer = document.createElement("div");
+    itemContainer.className = "cart__itemContainer";
+    itemContainer.setAttribute("data-item-id", item.id);
 
-      //creamos el titulo
-      const title = document.createElement("p");
-      title.className = "cart__item";
-      title.textContent = item.title;
-      itemContainer.append(title);
+    //creamos el titulo
+    const title = document.createElement("p");
+    title.className = "cart__item";
+    title.textContent = item.title;
+    itemContainer.append(title);
 
-      //creamos el precio
-      const price = document.createElement("p");
-      price.className = "cart__itemPrice";
-      price.textContent = item.price;
-      itemContainer.append(price);
+    //creamos el precio
+    const price = document.createElement("p");
+    price.className = "cart__itemPrice";
+    price.textContent = item.price;
+    itemContainer.append(price);
 
-      //creación del boton de decrementar
-      const buttonDecrement = document.createElement("button");
-      buttonDecrement.className = "cart__handleQuantity";
-      buttonDecrement.textContent = "-";
-      itemContainer.append(buttonDecrement);
+    //creamos del boton de decrementar
+    const buttonDecrement = document.createElement("button");
+    buttonDecrement.className = "cart__handleQuantity";
+    buttonDecrement.textContent = "-";
+    itemContainer.append(buttonDecrement);
 
-      //creamos la cantidad
-      const quantity = document.createElement("span");
-      quantity.className = "cart__span";
-      quantity.textContent = item.quantity;
-      itemContainer.append(quantity);
+    //creamos la cantidad
+    const quantity = document.createElement("span");
+    quantity.className = "cart__span";
+    quantity.textContent = item.quantity;
+    itemContainer.append(quantity);
 
-      //creación del boton de aumentar
-      const buttonIncrement = document.createElement("button");
-      buttonIncrement.className = "cart__handleQuantity";
-      buttonIncrement.textContent = "+";
-      itemContainer.append(buttonIncrement);
+    //creamos del boton de aumentar
+    const buttonIncrement = document.createElement("button");
+    buttonIncrement.className = "cart__handleQuantity";
+    buttonIncrement.textContent = "+";
+    itemContainer.append(buttonIncrement);
 
-      //Creación del boton eliminar
-      const buttonDelete = document.createElement("button");
-      buttonDelete.className = "cart__delete";
-      buttonDelete.textContent = "X";
-      itemContainer.append(buttonDelete);
+    //Creamos del boton eliminar
+    const buttonDelete = document.createElement("button");
+    buttonDelete.className = "cart__delete";
+    buttonDelete.textContent = "X";
+    itemContainer.append(buttonDelete);
 
-      cartContainer.appendChild(itemContainer);
-    });
-  }
+    cartContainer.appendChild(itemContainer);
+  });
 };
 
 /*****************************************************
- * Description: Calcular el precio total del carrito
+ * Description:
+ * Calcular el precio total del carrito
  * @returns {number} precio total
  ****************************************************/
 
@@ -133,7 +147,8 @@ const calculateTotalPrice = () => {
 };
 
 /*******************************************************
- * Description: Función que actualiza el precio parcial
+ * Description:
+ * Función que actualiza el precio parcial
  * @param {number} quantity
  * @param {number} price
  * @returns {number}
@@ -171,6 +186,20 @@ const updateQuantityDisplay = (productId, newQuantity) => {
   }
 };
 
+/*************************************************
+ * Description:
+ * Función que actualiza el precio total del carrito
+ *************************************************/
+
+const updateTotalPrice = () => {
+  if (cart.length === 0) {
+    showCartEmptyMessage();
+  } else {
+    const totalPriceInTheCart = calculateTotalPrice();
+    totalPrice.textContent = `$${totalPriceInTheCart.toFixed(2)}`; // Formatear el precio total
+  }
+};
+
 /*********************************************************
  * Description: Disminuir la cantidad de un producto
  * @param {number} productId
@@ -186,6 +215,7 @@ const decrementQuantity = (productId) => {
     } else {
       cart.splice(productIndex, 1);
       ShowListOfProductsInCart();
+      updateTotalPrice();
     }
   }
   console.log(cart);
@@ -203,6 +233,7 @@ const incrementQuantity = (productId) => {
     cart[productIndex].quantity++;
     updateQuantityDisplay(productId, cart[productIndex].quantity);
     console.log("increment");
+    updateTotalPrice();
   }
 
   console.log(cart);
@@ -219,6 +250,7 @@ const deleteProduct = (productId) => {
     cart.splice([productIndex], 1);
   }
   ShowListOfProductsInCart();
+  updateTotalPrice();
 };
 
 //Manejar eventos sobre elementos que se generan dinamicamente
