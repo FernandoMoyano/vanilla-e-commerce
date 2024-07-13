@@ -31,6 +31,14 @@ class UIController {
     cart.removeFromCart(productId);
     UIController.updateCartUI();
   }
+
+  static handleIncreaseQuantityClick(event) {
+    const button = event.target;
+    const productId = button.closest(".cart-item").getAttribute("data-id");
+
+    cart.increaseQuantity(productId);
+    UIController.updateCartUI();
+  }
 }
 
 const addButtons = document.querySelectorAll(".product__add");
