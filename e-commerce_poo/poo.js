@@ -1,6 +1,6 @@
 console.log("Archivo poo.js cargado correctamente");
 
-//POO.js
+//poo.js
 // ─── Clase Product ───────────────────────────────────────────────────────────
 
 export class Product {
@@ -17,10 +17,6 @@ export class Product {
   getDescription() {
     return `${this.id}-${this.title}-${this.price}`;
   }
-
-  /*  get Stock() {
-    return this.stock;
-  } */
 }
 
 // ─── Clase Cart ──────────────────────────────────────────────────────────────

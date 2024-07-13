@@ -49,7 +49,7 @@ const checkIfItExists = (productItem) => {
 
 /*********************************************
  * Description:
- * Funcion para agregar el producto al carro
+ * Funcion para agregar un producto al carro
  *********************************************/
 
 const addToCart = () => {
@@ -81,8 +81,8 @@ const addToCart = () => {
 addToCart();
 
 /*************************************************
- * Description:
- * Funcion que genera el item dentro del carrito
+ * Funcion que genera el item agregado dentro del
+ * carrito
  *************************************************/
 
 const ShowListOfProductsInCart = () => {
@@ -133,7 +133,6 @@ const ShowListOfProductsInCart = () => {
 };
 
 /*****************************************************
- * Description:
  * Calcular el precio total del carrito
  * @returns {number} precio total
  ****************************************************/
@@ -147,7 +146,6 @@ const calculateTotalPrice = () => {
 };
 
 /*******************************************************
- * Description:
  * Función que actualiza el precio parcial
  * @param {number} quantity
  * @param {number} price
@@ -160,7 +158,6 @@ const updatePartialPrice = (quantity, price) => {
 };
 
 /************************************************
- * Description:
  * Actualizar la cantidad de un producto
  * @param {number} productId
  * @param {number} newQuantity
@@ -187,7 +184,6 @@ const updateQuantityDisplay = (productId, newQuantity) => {
 };
 
 /*************************************************
- * Description:
  * Función que actualiza el precio total del carrito
  *************************************************/
 
@@ -201,7 +197,7 @@ const updateTotalPrice = () => {
 };
 
 /*********************************************************
- * Description: Disminuir la cantidad de un producto
+ Disminuir la cantidad de un producto
  * @param {number} productId
  ********************************************************/
 
@@ -222,7 +218,7 @@ const decrementQuantity = (productId) => {
 };
 
 /***************************************************
- *Description: Aumentar la cantidad de un producto
+ Aumentar la cantidad de un producto
  * @param {number} productId
  *************************************************/
 
@@ -240,7 +236,7 @@ const incrementQuantity = (productId) => {
 };
 
 /**************************************************
- * Description:Eliminar un producto del carrito
+  Eliminar un producto del carrito
  * @param {number} productId
  **************************************************/
 

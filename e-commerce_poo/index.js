@@ -23,6 +23,14 @@ class UIController {
     cart.addToCart(product, 1);
     console.log(cart);
   };
+
+  static handleRemoveProductClick(event) {
+    const button = event.target;
+    const productId = button.closest(".cart-item").getAttribute("data-id");
+
+    cart.removeFromCart(productId);
+    UIController.updateCartUI();
+  }
 }
 
 const addButtons = document.querySelectorAll(".product__add");
