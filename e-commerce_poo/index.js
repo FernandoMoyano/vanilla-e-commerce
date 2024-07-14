@@ -22,8 +22,10 @@ class UIController {
 
     const product = new Product(productId, productTitle, productPrice);
     cart.addToCart(product, 1);
+    UIController.updateCartUI();
     console.log(cart);
   };
+
   /* Manejo del click al boton eliminar_________________ */
   static handleRemoveProductClick(event) {
     const button = event.target;
@@ -49,6 +51,53 @@ class UIController {
 
     cart.decreaseQuantity(productId);
     UIController.updateCartUI();
+  }
+
+  /* Manejo de la actualizacion de la interfaz de usurio___________ */
+  static updateCartUI() {
+    const cartContainer = document.querySelector(".cart__container");
+    const totalPriceContainer = document.querySelector(".cart__totalPrice");
+
+    cartContainer.innerHTML = "";
+
+    Object.values(cart.items).forEach((item) => {
+      const cartItem = document.createElement("div");
+      cartItem.classList.add("cart-item");
+      cartItem.setAttribute("data-id", item.product.id);
+
+      cartItem.innerHTML = `
+          <div>${item.product.title}</div>
+          <div>${item.product.price} x ${item.quantity}</div>
+          <div>
+            <button class="cart__increase">+</button>
+            <button class="cart__decrease">-</button>
+            <button class="cart__remove">Eliminar</button>
+          </div>
+        `;
+
+      cartContainer.appendChild(cartItem);
+    });
+
+    totalPriceContainer.innerText = `Total: ${cart.calculateTotalPrice()}`;
+
+    //escucha de eventos para los botones del carro________
+    document.querySelectorAll(".cart__increase").forEach((button) => {
+      button.addEventListener(
+        "click",
+        UIController.handleIncreaseQuantityClick
+      );
+    });
+
+    document.querySelectorAll(".cart__decrease").forEach((button) => {
+      button.addEventListener(
+        "click",
+        UIController.handleDecreaseQuantityClick
+      );
+    });
+
+    document.querySelectorAll(".cart__remove").forEach((button) => {
+      button.addEventListener("click", UIController.handleRemoveProductClick);
+    });
   }
 }
 

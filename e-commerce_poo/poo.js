@@ -43,7 +43,7 @@ export class Cart {
   calculateTotalPrice() {
     let totalPrice = 0;
     for (const item of Object.values(this.items)) {
-      totalPrice += this.items[item].product.price * this.items[item].quantity;
+      totalPrice += item.product.price * item.quantity;
     }
     return totalPrice;
   }
