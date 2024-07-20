@@ -126,6 +126,15 @@ class UIController {
       console.log("No hay pedido para confirmar.");
     }
   }
+
+  /* Manejo del rastreo del pedido_______________________ */
+  static handleTrackOrderClick() {
+    if (currentOrder) {
+      currentOrder.trackOrder();
+    } else {
+      console.log("No hay pedido para rastrear.");
+    }
+  }
 }
 
 const addButtons = document.querySelectorAll(".product__add");
