@@ -135,6 +135,15 @@ class UIController {
       console.log("No hay pedido para rastrear.");
     }
   }
+
+  /* Manejo de la actualización del estado del pedido_____ */
+  static updateOrderStatus() {
+    const orderStatusContainer = document.querySelector(".order__status");
+    if (currentOrder) {
+      orderStatusContainer.innerText = `Estado del pedido: ${currentOrder.status}`;
+    } else {
+      orderStatusContainer.innerText = "";
+    }
 }
 
 const addButtons = document.querySelectorAll(".product__add");
