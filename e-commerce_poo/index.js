@@ -116,6 +116,17 @@ class UIController {
     console.log("Pedido creado:", currentOrder);
   }
 
+  /* Manejo de la cancelación del pedido_________________ */
+  static handleCancelOrderClick() {
+    if (currentOrder) {
+      currentOrder.cancelOrder();
+      UIController.updateOrderStatus();
+      console.log("Pedido cancelado:", currentOrder);
+    } else {
+      console.log("No hay pedido para cancelar.");
+    }
+  }
+
   /* Manejo de la confirmación del pedido________________ */
   static handleConfirmOrderClick() {
     if (currentOrder) {
