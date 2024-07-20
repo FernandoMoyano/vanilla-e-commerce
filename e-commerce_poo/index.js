@@ -115,6 +115,17 @@ class UIController {
     UIController.updateOrderStatus();
     console.log("Pedido creado:", currentOrder);
   }
+
+  /* Manejo de la confirmación del pedido________________ */
+  static handleConfirmOrderClick() {
+    if (currentOrder) {
+      currentOrder.confirmOrder();
+      UIController.updateOrderStatus();
+      console.log("Pedido confirmado:", currentOrder);
+    } else {
+      console.log("No hay pedido para confirmar.");
+    }
+  }
 }
 
 const addButtons = document.querySelectorAll(".product__add");
