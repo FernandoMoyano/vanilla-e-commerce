@@ -1,6 +1,6 @@
 console.log("Archivo poo.js cargado correctamente");
 
-//poo.js
+//POO.JS
 // ─── Clase Product ───────────────────────────────────────────────────────────
 
 export class Product {

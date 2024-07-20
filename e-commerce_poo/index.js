@@ -1,10 +1,12 @@
-//index.js
+//INDEX.JS
 
-import { Cart, Product } from "./poo.js";
+import { Cart, Product, Order } from "./poo.js";
 console.log("Archivo index.js cargado correctamente");
 
 //Array Carrito
 const cart = new Cart();
+let currentOrder = null;
+let orderId = 1;
 
 class UIController {
   /* Manejo del click al botón agregar_________ */
@@ -80,24 +82,38 @@ class UIController {
 
     totalPriceContainer.innerText = `Total: ${cart.calculateTotalPrice()}`;
 
-    //escucha de eventos para los botones del carro________
+    //escucha de evento para el botón incrementar________
     document.querySelectorAll(".cart__increase").forEach((button) => {
       button.addEventListener(
         "click",
         UIController.handleIncreaseQuantityClick
       );
     });
-
+    //escucha de eventos para el botón decrementar
     document.querySelectorAll(".cart__decrease").forEach((button) => {
       button.addEventListener(
         "click",
         UIController.handleDecreaseQuantityClick
       );
     });
-
+    //escucha de eventos para el botón eliminar
     document.querySelectorAll(".cart__remove").forEach((button) => {
       button.addEventListener("click", UIController.handleRemoveProductClick);
     });
+  }
+
+  //ORDENES
+
+  /* Manejo de la creación de pedido_____________________ */
+  static handleCreateOrderClick() {
+    if (Object.keys(cart.items).length === 0) {
+      console.log("El carrito está vacío. No se puede crear el pedido.");
+      return;
+    }
+
+    currentOrder = new Order(orderId++, cart);
+    UIController.updateOrderStatus();
+    console.log("Pedido creado:", currentOrder);
   }
 }
 
