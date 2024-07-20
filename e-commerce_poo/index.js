@@ -144,9 +144,25 @@ class UIController {
     } else {
       orderStatusContainer.innerText = "";
     }
+  }
 }
-
 const addButtons = document.querySelectorAll(".product__add");
 addButtons.forEach((button) =>
   button.addEventListener("click", UIController.handleAddProductClick)
 );
+
+document
+  .querySelector(".order__create")
+  .addEventListener("click", UIController.handleCreateOrderClick);
+
+document
+  .querySelector(".order__cancel")
+  .addEventListener("click", UIController.handleCancelOrderClick);
+
+document
+  .querySelector(".order__confirm")
+  .addEventListener("click", UIController.handleConfirmOrderClick);
+
+document
+  .querySelector(".order__track")
+  .addEventListener("click", UIController.handleTrackOrderClick);
